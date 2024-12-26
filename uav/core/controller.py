@@ -19,3 +19,11 @@ class Controller(ABC):
     @abstractmethod
     async def log_sensor(self):
         pass
+
+    @abstractmethod
+    async def turn(self, angle: float):
+        pass
+
+    @abstractmethod
+    async def request_lidar_data(self):
+        pass

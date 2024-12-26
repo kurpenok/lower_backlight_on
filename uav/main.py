@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 from loguru import logger
 
+from commands.find_nearest_obstacle import FindNearestObstacleCommand
 from commands.land import LandCommand
 from commands.move_to_point import MoveToPointCommand
 from commands.takeoff import TakeoffCommand
@@ -27,6 +28,7 @@ async def main() -> None:
     asyncio.create_task(controller.log_sensor())
 
     await TakeoffCommand(controller, 10).execute()
+    await FindNearestObstacleCommand(controller).execute()
     await MoveToPointCommand(controller, GPSCoords(latitude=5, longitude=5)).execute()
     await MoveToPointCommand(controller, GPSCoords(latitude=5, longitude=-5)).execute()
     await MoveToPointCommand(controller, GPSCoords(latitude=-5, longitude=-5)).execute()

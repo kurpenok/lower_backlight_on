@@ -1,4 +1,5 @@
 import asyncio
+import json
 
 from loguru import logger
 from pymavlink import mavutil
@@ -70,3 +71,27 @@ class MAVLinkController(Controller):
                 f"Altitude: {msg.relative_alt / 1000} m, Lat: {msg.lat / 1e7}, Lon: {msg.lon / 1e7}"
             )
             await asyncio.sleep(5)
+
+    async def turn(self, angle: float):
+        logger.info(f"Turning to {angle}°")
+        self.connection.send(
+            mavutil.mavlink.MAV_CMD_CONDITION_YAW,
+            angle,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+        )
+        await asyncio.sleep(5)
+
+    async def request_lidar_data(self):
+        lidar_data = {
+            "angles": [0, 30, 60, 90, 120, 150, 180],
+            "distances": [1.2, 2.0, 3.5, 0.8, 1.1, 1.5, 2.3],
+        }
+
+        logger.info("Getting lidar data...")
+        await asyncio.sleep(1)
+        return json.dumps(lidar_data)

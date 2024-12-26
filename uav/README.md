@@ -1,4 +1,4 @@
-# First subtask. Drone control
+# First and second subtasks. Drone control and finding nearest obstacle
 
 ### Quick start
 
